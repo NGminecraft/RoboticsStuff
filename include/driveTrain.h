@@ -11,6 +11,8 @@ class DriveTrain{
         DriveTrain(motor lm, motor rm);
 
         void updateDrivetrain();
+        void DrivePercent(double percent);
+        void TwoDDrive(double percentX, double percentY);
     private:
         motor lm;
         motor rm;
@@ -20,5 +22,7 @@ class DriveTrain{
         float wheelBase = 266.7;
 
         drivetrain DriveTrainObj;
+
+        int maxRPM = 200;
 
 };

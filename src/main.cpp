@@ -23,12 +23,21 @@ DriveTrain Drive = DriveTrain(PORT1, PORT2);
 
 ControllerTerminal OUT_controller = ControllerTerminal(mainController);
 
+void Move()
+{
+    Drive.TwoDDrive(mainController.Axis3.position()/100, mainController.Axis4.position()/100);
+}
 
 int main() {
 
     Brain.Screen.printAt( 10, 50, "Hello V5" );
     
     OUT_controller.PrintMessage("Hello Controller!");
+
+    mainController.Axis3.changed(Move);
+    mainController.Axis4.changed(Move);
+
+    OUT_controller.PrintMessage("Registered Axes");
     
 
     while(1) {

@@ -6,27 +6,42 @@ using namespace vex;
 
     // Constructors and their overloads
 DriveTrain::DriveTrain() : 
-        lm(motor(PORT1)), rm(motor(PORT2)),
-        DriveTrainObj(lm, rm, circumference, trackWidth, wheelBase)
-        {}
+    lm(motor(PORT1)), rm(motor(PORT2)),
+    DriveTrainObj(lm, rm, circumference, trackWidth, wheelBase)
+    {}
 DriveTrain::DriveTrain(int leftMotor, int rightMotor) : 
-        lm(motor(leftMotor)), rm(motor(rightMotor)),
-        DriveTrainObj(lm, rm, circumference, trackWidth, wheelBase)
-        {
-                lm = motor(leftMotor, true);
-                rm = motor(rightMotor, true);
-                updateDrivetrain();
+    lm(motor(leftMotor)), rm(motor(rightMotor)),
+    DriveTrainObj(lm, rm, circumference, trackWidth, wheelBase)
+    {
+        lm = motor(leftMotor, true);
+        rm = motor(rightMotor, true);
+        updateDrivetrain();
 }
 DriveTrain::DriveTrain(motor leftMotor, motor rightMotor) : 
-        lm(motor(PORT1)), rm(motor(PORT2)),
-        DriveTrainObj(leftMotor, rightMotor, circumference, trackWidth, wheelBase)
-        {
-                lm = leftMotor;
-                rm = rightMotor;
-                updateDrivetrain();
-        }
+    lm(motor(PORT1)), rm(motor(PORT2)),
+    DriveTrainObj(leftMotor, rightMotor, circumference, trackWidth, wheelBase)
+    {
+        lm = leftMotor;
+        rm = rightMotor;
+        updateDrivetrain();
+    }
 
 void DriveTrain::updateDrivetrain() 
-        {
-        DriveTrainObj = drivetrain(lm, rm, circumference, trackWidth, wheelBase);
-        }
+{
+    DriveTrainObj = drivetrain(lm, rm, circumference, trackWidth, wheelBase);
+}
+
+void DriveTrain::DrivePercent(double percent)
+{
+    DriveTrainObj.drive(forward, (percent/100)*maxRPM, rpm);
+}
+
+void DriveTrain::TwoDDrive(double X, double Y)
+{
+    double xRpm = maxRPM * X;
+    double yRpm = maxRPM * Y;
+    double LeftSpeed = yRpm+xRpm;
+    double RightSpeed = yRpm-xRpm;
+    lm.spin(forward, LeftSpeed, rpm);
+    rm.spin(forward, RightSpeed, rpm);
+}
