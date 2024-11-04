@@ -3,13 +3,16 @@
 #include "vex.h"
 #include <string>
 
+
 using namespace vex;
-using namespace std;
 
 class ControllerTerminal{
     public:
-        controller Controller;
+        ControllerTerminal(controller NewController);
         int rows = 5;
         int columns = 16;
-        void PrintMessage(string message);
+        void PrintMessage(const char* message);
+
+    private:
+        controller Controller;
 };

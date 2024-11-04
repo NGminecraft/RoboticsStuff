@@ -2,8 +2,12 @@
 
 #include <string>
 
+using namespace vex;
 
-void ControllerTerminal::PrintMessage(string msg)
+
+ControllerTerminal::ControllerTerminal(controller NewController) : Controller(NewController) {}
+
+void ControllerTerminal::PrintMessage(const char* msg)
 {
     if (Controller.Screen.row() >= rows)
     {

@@ -15,7 +15,10 @@ class DriveTrain{
         motor lm;
         motor rm;
 
-        float circumference;
-        float trackWidth; // distance between each wheel l/r
-        float wheelBase;
+        float circumference = 638.37058;
+        float trackWidth = 342.9; // distance between each wheel l/r
+        float wheelBase = 266.7;
+
+        drivetrain DriveTrainObj;
+
 };

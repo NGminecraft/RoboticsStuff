@@ -7,7 +7,7 @@
 /*                                                                            */
 /*----------------------------------------------------------------------------*/
 #include "vex.h"
-#include "driveTrain.cpp"
+#include "driveTrain.h"
 #include "ControllerTerminal.h"
 
 using namespace vex;
@@ -17,9 +17,11 @@ vex::brain Brain;
 
 // define your global instances of motors and other devices here
 
+controller mainController = controller();
+
 DriveTrain Drive = DriveTrain(PORT1, PORT2);
 
-ControllerTerminal OUT_controller = ControllerTerminal();
+ControllerTerminal OUT_controller = ControllerTerminal(mainController);
 
 
 int main() {
@@ -27,7 +29,6 @@ int main() {
     Brain.Screen.printAt( 10, 50, "Hello V5" );
     
     OUT_controller.PrintMessage("Hello Controller!");
-
     
 
     while(1) {
