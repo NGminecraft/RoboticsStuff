@@ -41,7 +41,13 @@ int main() {
     
 
     while(1) {
+        Move();
+        Brain.Screen.clearScreen();
+        Brain.Screen.setCursor(0, 0);
+        Brain.Screen.print(mainController.Axis3.position());
+        Brain.Screen.print("");
+        Brain.Screen.print(mainController.Axis4.position());
         // Allow other tasks to run
         this_thread::sleep_for(10);
-    }
+    
 }
