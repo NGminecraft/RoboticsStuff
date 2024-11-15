@@ -6,20 +6,23 @@ using namespace vex;
 
     // Constructors and their overloads
 DriveTrain::DriveTrain() : 
-    lm(motor(PORT1)), rm(motor(PORT2)),
-    DriveTrainObj(lm, rm, circumference, trackWidth, wheelBase)
+    lm(motor(PORT1, ratio18_1, true)), rm(motor(PORT2, ratio18_1)),
+    DriveTrainObj(lm, rm, circumference, trackWidth, wheelBase),
+    maxRPM(200)
     {}
 DriveTrain::DriveTrain(int leftMotor, int rightMotor) : 
-    lm(motor(leftMotor)), rm(motor(rightMotor)),
-    DriveTrainObj(lm, rm, circumference, trackWidth, wheelBase)
+    lm(motor(leftMotor, ratio18_1, true)), rm(motor(rightMotor, ratio18_1)),
+    DriveTrainObj(lm, rm, circumference, trackWidth, wheelBase),
+    maxRPM(200)
     {
         lm = motor(leftMotor, true);
         rm = motor(rightMotor, true);
         updateDrivetrain();
 }
 DriveTrain::DriveTrain(motor leftMotor, motor rightMotor) : 
-    lm(motor(PORT1)), rm(motor(PORT2)),
-    DriveTrainObj(leftMotor, rightMotor, circumference, trackWidth, wheelBase)
+    lm(motor(PORT1, ratio18_1, true)), rm(motor(PORT2, ratio18_1)),
+    DriveTrainObj(leftMotor, rightMotor, circumference, trackWidth, wheelBase),
+    maxRPM(200)
     {
         lm = leftMotor;
         rm = rightMotor;
@@ -38,11 +41,13 @@ void DriveTrain::DrivePercent(double percent)
 
 void DriveTrain::TwoDDrive(double X, double Y)
 {
-    double xRpm = maxRPM * X;
-    double yRpm = maxRPM * Y;
-    double LeftSpeed = yRpm+xRpm;
-    double RightSpeed = yRpm-xRpm;
-    
-    lm.spin(forward, LeftSpeed, rpm);
-    rm.spin(forward, RightSpeed, rpm);
+    if (X <= 15){
+
+        X = X/100*maxRPM;
+        Y = Y/100*maxRPM;
+
+        printf("Driving at (%d, %d)\n from (%d, %d)", X-X*Y, X-X*Y, X, Y);
+        lm.spin(forward, X+Y, rpm);
+        rm.spin(forward, X-Y, rpm);
+    }
 }

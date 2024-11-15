@@ -17,7 +17,7 @@ vex::brain Brain;
 
 // define your global instances of motors and other devices here
 
-controller mainController = controller();
+controller mainController = controller(primary);
 
 DriveTrain Drive = DriveTrain(PORT1, PORT2);
 
@@ -25,7 +25,7 @@ ControllerTerminal OUT_controller = ControllerTerminal(mainController);
 
 void Move()
 {
-    Drive.TwoDDrive(mainController.Axis3.position()/100, mainController.Axis4.position()/100);
+    Drive.TwoDDrive(mainController.Axis3.position(), mainController.Axis4.position());
 }
 
 int main() {
@@ -34,20 +34,16 @@ int main() {
     
     OUT_controller.PrintMessage("Hello Controller!");
 
+    OUT_controller.PrintMessage("Registered Axes");
+    
     mainController.Axis3.changed(Move);
     mainController.Axis4.changed(Move);
 
-    OUT_controller.PrintMessage("Registered Axes");
-    
-
-    while(1) {
-        Move();
-        Brain.Screen.clearScreen();
+    while(true) {
         Brain.Screen.setCursor(0, 0);
-        Brain.Screen.print(mainController.Axis3.position());
-        Brain.Screen.print("");
-        Brain.Screen.print(mainController.Axis4.position());
+        Brain.Screen.clearScreen();
+        mainController.Screen.print("(%f, %f)", mainController.Axis3.position(), mainController.Axis4.position());
         // Allow other tasks to run
-        this_thread::sleep_for(10);
-    
+        this_thread::sleep_for(15);
+    }
 }
