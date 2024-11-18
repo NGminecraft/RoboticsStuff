@@ -8,7 +8,7 @@
 /*----------------------------------------------------------------------------*/
 #include "vex.h"
 #include "driveTrain.h"
-#include "ControllerTerminal.h"
+#include "singleMotor.h"
 
 using namespace vex;
 
@@ -21,7 +21,8 @@ controller mainController = controller(primary);
 
 DriveTrain Drive = DriveTrain(PORT1, PORT2);
 
-ControllerTerminal OUT_controller = ControllerTerminal(mainController);
+SingleMotor arm = SingleMotor(19);
+
 
 void Move()
 {
@@ -32,18 +33,17 @@ int main() {
 
     Brain.Screen.printAt( 10, 50, "Hello V5" );
     
-    OUT_controller.PrintMessage("Hello Controller!");
-
-    OUT_controller.PrintMessage("Registered Axes");
-    
     mainController.Axis3.changed(Move);
     mainController.Axis4.changed(Move);
 
     while(true) {
         Brain.Screen.setCursor(0, 0);
         Brain.Screen.clearScreen();
-        mainController.Screen.print("(%f, %f)", mainController.Axis3.position(), mainController.Axis4.position());
-        // Allow other tasks to run
-        this_thread::sleep_for(15);
+        if (mainController.ButtonL1.pressing()) {
+            arm.spin();
+        } else {
+            arm.stopSpinning(true);
+        }
+//        this_thread::sleep_for(15);
     }
 }
