@@ -41,13 +41,14 @@ void DriveTrain::DrivePercent(double percent)
 
 void DriveTrain::TwoDDrive(double X, double Y)
 {
-    if (X <= 15){
-
-        X = X/100*maxRPM;
-        Y = Y/100*maxRPM;
-
-        printf("Driving at (%d, %d)\n from (%d, %d)", X-X*Y, X-X*Y, X, Y);
-        lm.spin(forward, X+Y, rpm);
-        rm.spin(forward, X-Y, rpm);
+    if (abs(X) <= 15 && abs(Y)<= 15){
+        X = 0;
+        Y = 0;
     }
+
+    X = -X;
+    Y = -Y;
+
+    lm.spin(forward, (Y+X)/100*maxRPM, rpm);
+    rm.spin(forward, (Y-X)/100*maxRPM, rpm);
 }
