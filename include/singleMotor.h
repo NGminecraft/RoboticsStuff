@@ -9,25 +9,18 @@ class SingleMotor {
         SingleMotor(motor motor);
         SingleMotor(int motorPort);
 
-        double targetPos;
-
-        void spin();
+        void spin(directionType direction);
 
         void spin(double velocity);
 
         void goToPos(int pos);
 
-        void holdPos();
-
-        void stopSpinning(bool hold);
+        void stopSpinning();
     
     private:
         motor ThisMotor;
         void spinAsync(directionType, double velocity);
 
         void startThread();
-        
-        void asyncHoldPos();
 
-        bool holding;
 };

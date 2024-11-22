@@ -10,6 +10,8 @@
 #include "driveTrain.h"
 #include "singleMotor.h"
 
+#include <functional>
+
 using namespace vex;
 
 // A global instance of vex::brain used for printing to the V5 brain screen
@@ -21,7 +23,9 @@ controller mainController = controller(primary);
 
 DriveTrain Drive = DriveTrain(PORT1, PORT2);
 
-SingleMotor arm = SingleMotor(19);
+SingleMotor arm(PORT19);
+
+SingleMotor pusher(PORT18);
 
 
 void Move()
@@ -36,14 +40,14 @@ int main() {
     mainController.Axis3.changed(Move);
     mainController.Axis4.changed(Move);
 
+    mainController.ButtonL1.pressed([](){arm.spin(forward);});
+    mainController.ButtonL2.pressed([](){arm.spin(reverse);});
+    mainController.ButtonL1.released([](){arm.stopSpinning();});
+    mainController.ButtonL2.released([](){arm.stopSpinning();});
+
     while(true) {
         Brain.Screen.setCursor(0, 0);
         Brain.Screen.clearScreen();
-        if (mainController.ButtonL1.pressing()) {
-            arm.spin();
-        } else {
-            arm.stopSpinning(true);
-        }
 //        this_thread::sleep_for(15);
     }
 }

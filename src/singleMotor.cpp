@@ -1,28 +1,21 @@
 #include "singleMotor.h"
 
-void SingleMotor::startThread(){
+SingleMotor::SingleMotor(motor Motor) : ThisMotor(Motor) {
+    ThisMotor.setStopping(brakeType::hold);
+    ThisMotor.setVelocity(30, percent);
+}
+SingleMotor::SingleMotor(int Motor) : ThisMotor(motor(Motor)) {
+    ThisMotor.setStopping(brakeType::hold);
+    ThisMotor.setVelocity(30, percent);
 }
 
-SingleMotor::SingleMotor(motor Motor) : ThisMotor(Motor), targetPos(125) {
-    
+void SingleMotor::spin(directionType direction = forward){
+    printf("Moving the motor: Pos-%f \n", ThisMotor.position(degrees));
+    ThisMotor.spin(direction);
 }
-SingleMotor::SingleMotor(int Motor) : ThisMotor(Motor), targetPos(125) {}
-
-void SingleMotor::spin(){printf("Moving the motor\n"); ThisMotor.spin(reverse, 200, rpm);}
 
 void SingleMotor::spin(double velocity) {ThisMotor.spin(vex::forward, velocity, rpm);}
 
-void SingleMotor::stopSpinning(bool hold = true) {
+void SingleMotor::stopSpinning() {
     ThisMotor.stop();
-    targetPos = ThisMotor.position(degrees);
-    holding = hold;
-}
-
-void SingleMotor::asyncHoldPos(){
-    while (true) {
-        if (holding && not ThisMotor.isSpinning()){
-            ThisMotor.spinTo(targetPos, degrees);
-            wait(10, msec);
-        }
-    }
 }
