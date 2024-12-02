@@ -19,8 +19,6 @@ vex::brain Brain;
 
 vision::signature jacket(1, -3031, -2535, -2783, 8759, 10083, 2504821, 2.5, 0); // Got using vision.vexcode.cloud
 
-vision mainCamera(PORT1, 118, jacket);
-
 // define your global instances of motors and other devices here
 
 controller mainController = controller(primary);
@@ -55,14 +53,9 @@ int main() {
     mainController.ButtonX.released([](){pusher.stopSpinning();});
 
     while(true) {
-        Brain.Screen.setCursor(0, 0);
+        Brain.Screen.printAt(10, 50, "%f, %f", mainController.Axis3.position(), mainController.Axis4.position());
+        printf("%ld, %ld\n", mainController.Axis3.position(), mainController.Axis4.position());
         Brain.Screen.clearScreen();
-        mainCamera.takeSnapshot(jacket);
-        if (mainCamera.objectCount > 0){
-            printf("Detected at (%d, %d)\n", mainCamera.largestObject.centerX, mainCamera.largestObject.centerY);
-        } else {
-            printf("Nothing Found\n");
-        }
         this_thread::sleep_for(15);
     }
 }
