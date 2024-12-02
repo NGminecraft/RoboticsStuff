@@ -23,9 +23,9 @@ controller mainController = controller(primary);
 
 DriveTrain Drive = DriveTrain(PORT1, PORT2);
 
-SingleMotor arm(PORT19);
+SingleMotor arm(PORT3);
 
-SingleMotor pusher(PORT18);
+SingleMotor pusher(PORT8);
 
 
 void Move()
