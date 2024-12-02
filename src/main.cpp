@@ -17,6 +17,10 @@ using namespace vex;
 // A global instance of vex::brain used for printing to the V5 brain screen
 vex::brain Brain;
 
+vision::signature jacket(1, -3031, -2535, -2783, 8759, 10083, 2504821, 2.5, 0); // Got using vision.vexcode.cloud
+
+vision mainCamera(PORT1, 118, jacket);
+
 // define your global instances of motors and other devices here
 
 controller mainController = controller(primary);
@@ -45,9 +49,20 @@ int main() {
     mainController.ButtonL1.released([](){arm.stopSpinning();});
     mainController.ButtonL2.released([](){arm.stopSpinning();});
 
+    mainController.ButtonB.pressed([](){pusher.spin(forward);});
+    mainController.ButtonB.released([](){pusher.stopSpinning();});
+    mainController.ButtonX.pressed([](){pusher.spin(reverse);});
+    mainController.ButtonX.released([](){pusher.stopSpinning();});
+
     while(true) {
         Brain.Screen.setCursor(0, 0);
         Brain.Screen.clearScreen();
-//        this_thread::sleep_for(15);
+        mainCamera.takeSnapshot(jacket);
+        if (mainCamera.objectCount > 0){
+            printf("Detected at (%d, %d)\n", mainCamera.largestObject.centerX, mainCamera.largestObject.centerY);
+        } else {
+            printf("Nothing Found\n");
+        }
+        this_thread::sleep_for(15);
     }
 }

@@ -10,7 +10,6 @@ SingleMotor::SingleMotor(int Motor) : ThisMotor(motor(Motor)) {
 }
 
 void SingleMotor::spin(directionType direction = forward){
-    printf("Moving the motor: Pos-%f \n", ThisMotor.position(degrees));
     ThisMotor.spin(direction);
 }
 
