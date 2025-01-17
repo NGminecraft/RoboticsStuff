@@ -1,16 +1,16 @@
 {
 	"extension": {
-		"version": "0.6.0",
+		"version": "0.6.1",
 		"json": 2
 	},
 	"project": {
 		"name": "firstProject",
 		"description": "",
-		"creationDate": "10/30/2024, 1:18:59 PM",
+		"creationDate": "Fri, 17 Jan 2025 21:28:07 GMT",
 		"platform": "V5",
 		"language": "cpp",
 		"slot": 2,
-		"sdkVersion": "V5_20240223_11_00_00",
+		"sdkVersion": "V5_20240802_15_00_00",
 		"cpp": {
 			"includePath": [],
 			"printf_float": true
