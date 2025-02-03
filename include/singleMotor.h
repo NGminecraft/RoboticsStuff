@@ -21,7 +21,10 @@ class SingleMotor {
 
         void setVelocity(double velocity);
 
-        void bindToKeybind(controller::button button, controller::button backButton);
+        double getAngle();
+
+        void reset();
+
     
     private:
         motor ThisMotor;

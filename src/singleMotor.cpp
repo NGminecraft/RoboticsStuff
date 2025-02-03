@@ -18,18 +18,22 @@ void SingleMotor::stopSpinning() {
     ThisMotor.stop();
 }
 
-void SingleMotor::bindToKeybind(controller::button forwardButton, controller::button backwardButton){
-    
-
-}
-
 void SingleMotor::setVelocity(double velocity) {
     ThisMotor.setVelocity(velocity, percent);
 }
 
 void SingleMotor::checkTemps(){
     if (ThisMotor.temperature() > 40){
-
         setVelocity(velocity*(ThisMotor.temperature()/50));
     }
+}
+
+double SingleMotor::getAngle() {
+    return ThisMotor.position(degrees);
+}  
+
+
+void SingleMotor::reset() {
+    ThisMotor.spinToPosition(0, degrees);
+    ThisMotor.resetPosition();
 }
